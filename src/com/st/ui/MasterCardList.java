@@ -1,0 +1,351 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.st.ui;
+
+import com.st.beans.MasterCardBean;
+import com.st.core.Main;
+import com.st.process.MasterCardProcessor;
+import com.st.utils.Constants;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+/**
+ *
+ * @author Timothy_Fab
+ */
+public class MasterCardList extends javax.swing.JFrame 
+{
+    /** Item Type Info column size. */
+    private final int CARDINFO_COLSIZE = 2;
+    /** Default table model for the Item Lookup. */
+    private DefaultTableModel tm = null;
+    
+    /** Column Title - Code. */
+    private final String COLTITLE_CODE = "Kode #";
+    /** Column Title - Card. */
+    private final String COLTITLE_CARD = "Card";
+    
+    /** Column position for Card Info Code. */
+    private final int CARD_COL_CODE = 0;
+    /** Column position for Card Info Card. */
+    private final int CARD_COL_CARD = 1;
+    
+    MasterCardBean[] dataCard = null;
+    MasterCardEdit CardEditUI = null;
+    
+    /** Processor. */
+    private MasterCardProcessor p = new MasterCardProcessor();
+    
+    private void SearchCard()
+    {
+      //Searching List Item type.
+      int searchBy = cmbSearchCriteria.getSelectedIndex();
+      MasterCardBean[] res=null;    
+      
+      if(null==p) p = new MasterCardProcessor();
+      System.out.println("SEARCH BY: " + searchBy);
+      switch(searchBy)
+      {
+         case 0:
+                res = p.getCardList(Constants.CARD_SEARCHBY_CODE, txtSearchValue.getText(), null);
+                break;
+      }
+     dataCard = res;
+    //Repaint the item list
+    this.repaintCardList(res);
+    }
+    
+  private void repaintCardList(MasterCardBean[] res)
+  {
+    if(null==res || res.length<=0) return;
+
+    this.resetCardList(res.length);
+    
+    /* This is the row:
+     * ID | NAME | STD SELL PRICE
+     */
+    //Set the items into the shopping list table.
+    for(int i=0; i<res.length; i++)
+    {
+      tm.setValueAt(res[i].getCode(), i, CARD_COL_CODE);
+      tm.setValueAt(res[i].getCard(), i, CARD_COL_CARD);
+    }
+  }
+    
+    /**
+     * Creates new form NewJFrame
+     */
+    public MasterCardList() {
+        initComponents();
+        this.SearchCard();
+        setExtendedState(MAXIMIZED_BOTH);     
+    }
+    
+    /** Used to edit info. */
+  public void editInfo(boolean action)
+  {
+    MasterCardBean bn;
+    if(action)
+    {
+      int SelectedRow = tblMasterCard.getSelectedRow();      
+      bn = dataCard[SelectedRow]; //number row set to array for reference get row
+
+      if(null!=bn)
+      {
+        CardEditUI = new MasterCardEdit(this, true, action, bn);
+      }
+    }
+    else
+    {CardEditUI = new MasterCardEdit(this, true, action, null);}
+    
+    
+    CardEditUI.setVisible(true);
+    CardEditUI.toFront();
+
+    //after transaction is finish, reload
+    CardEditUI.finalizeMe();
+    this.SearchCard();
+  }  
+  
+  
+    
+  //Reset jTable Master Card
+  private void resetCardList(int row)
+  {
+    TableColumn t;
+
+    int COLSIZE_CODE = 100;
+    int COLSIZE_CARD = 200;
+   
+
+    tm = new DefaultTableModel(row, CARDINFO_COLSIZE);
+    tm.setColumnIdentifiers(
+      new String[]
+      {
+        COLTITLE_CODE,
+        COLTITLE_CARD       
+      }
+    );
+    
+    tblMasterCard.setModel(tm);
+    tm.setValueAt(null, 0, CARD_COL_CODE);
+    tm.setValueAt(null, 0, CARD_COL_CARD);
+
+    t = tblMasterCard.getColumn(COLTITLE_CODE);
+    t.setResizable(false);
+    t.setMinWidth(COLSIZE_CODE);
+    t.setPreferredWidth(COLSIZE_CODE);
+
+    t = tblMasterCard.getColumn(COLTITLE_CARD);
+    t.setResizable(false);
+    t.setMinWidth(COLSIZE_CARD);
+    t.setPreferredWidth(COLSIZE_CARD); 
+  }
+  
+  //close form this frame
+  private void CloseMe()
+  {
+    int logoutResult = JOptionPane.showConfirmDialog(
+                        this,
+                        "Anda yakin untuk keluar?",
+                        "LogoutConfirmation",
+                        JOptionPane.YES_NO_OPTION);
+    if(logoutResult==JOptionPane.YES_OPTION)
+    {
+      //Main.callModule(Constants.MOD_HOME);
+      this.finalize();
+    }
+  }
+  
+  public void finalize()
+  {
+    this.resetEngine(false);
+    this.setVisible(false);
+  }
+  
+  public void resetEngine(boolean renew)
+  {
+    if(null!=p)
+    {
+      p.finalize();
+      p = null;
+    }
+
+    if(null!=dataCard) dataCard = null;
+
+    if(renew)
+    {
+      //Renew the processor and the transaction bean
+      p = new MasterCardProcessor();
+    }
+  }
+  
+   public void RefreshTable()
+   { this.SearchCard(); }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jLabel1 = new javax.swing.JLabel();
+        cmbSearchCriteria = new javax.swing.JComboBox();
+        jButton1 = new javax.swing.JButton();
+        txtSearchValue = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblMasterCard = new javax.swing.JTable();
+        jLabel3 = new javax.swing.JLabel();
+        btnCancel = new javax.swing.JButton();
+        btnAdd = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(null);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setText("Master Card");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(600, 30, 230, 29);
+
+        cmbSearchCriteria.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cmbSearchCriteria.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Kode" }));
+        getContentPane().add(cmbSearchCriteria);
+        cmbSearchCriteria.setBounds(220, 100, 100, 30);
+
+        jButton1.setText("Cari");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1);
+        jButton1.setBounds(500, 100, 80, 30);
+        getContentPane().add(txtSearchValue);
+        txtSearchValue.setBounds(330, 100, 160, 30);
+
+        tblMasterCard.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tblMasterCard.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblMasterCardMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblMasterCard);
+
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(10, 140, 1350, 480);
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel3.setText("Daftar Card:");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(10, 100, 112, 22);
+
+        btnCancel.setText("Keluar");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCancel);
+        btnCancel.setBounds(150, 650, 90, 30);
+
+        btnAdd.setText("Tambah");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnAdd);
+        btnAdd.setBounds(40, 650, 90, 30);
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/st/ui/image/Background_ok.png"))); // NOI18N
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(0, 0, 1380, 720);
+
+        pack();
+        setLocationRelativeTo(null);
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        // TODO add your handling code here:
+        editInfo(false);
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        CloseMe();
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void tblMasterCardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMasterCardMouseClicked
+        editInfo(true);
+    }//GEN-LAST:event_tblMasterCardMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.SearchCard();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(MasterCardList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(MasterCardList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(MasterCardList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(MasterCardList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new MasterCardList().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnCancel;
+    private javax.swing.JComboBox cmbSearchCriteria;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblMasterCard;
+    private javax.swing.JTextField txtSearchValue;
+    // End of variables declaration//GEN-END:variables
+}

@@ -1,0 +1,115 @@
+#Log Daemon status during first server boot whether to turn ON or OFF.
+#By default, if not specified the status will be on
+LOG_INIT_STATUS=ON
+
+#The minimum level of log to print
+#Default is ERROR, other value is INFO, WARNING, SEVERE, ERROR
+LOG_MIN_PRINT_LEVEL=WARNING
+
+#LOG_FILE_PATH will be defaulted to /templog directory if not supplied here
+#LOG_FILE_PATH must NOT be closed with trailing slashes / or \
+LOG_FILE_PATH=c:/temp/ITWorksRECASHIERLog
+
+#LOG_FILE_PREFIX will be defaulted to "ServerLog" if not supplied here
+LOG_FILE_PREFIX=ITWorksRECASHIER
+
+#LOG_FILE_SUFFIX will be defaulted to ".log" if not supplied here
+LOG_FILE_SUFFIX=.log
+
+#Two options for pattern value: DATE_LONG and TIME_MILLISEC
+#LOG_FILE_PATTERN will be defaulted to "DATE_LONG" if not supplied here
+LOG_FILE_PATTERN=TIME_MILLISEC
+
+#Log daemon memory buffer size in KB
+#LOG_BUFFER_SIZE will be defaulted to "1024" if not supplied here
+LOG_BUFFER_SIZE=1024
+
+#The max size of the log file before backing up. In bytes.
+#LOG_FILE_MAX_SIZE will be defaulted to "2000000 Bytes (2MB)" if not supplied here
+LOG_FILE_MAX_SIZE=2000000
+
+#Number of file to be used for logging. -1 for unlimited.
+#LOG_FILE_COUNT will be defaulted to "100 files max" if not supplied here
+LOG_FILE_COUNT=-1
+
+#Log daemon roll time in second
+#LOG_ROLL_TIME will be defaulted to "60" if not supplied here
+LOG_ROLL_TIME=120
+
+##########################
+# DBPOOL_API = Choose which connection pool API to run GD or PRIMROSE
+# DBPOOL_CFGTYPE = Type of config to load for the DB Pool (CLASS or FILE).
+#                  CLASS means java class. Only one type can be used
+#                  Class type config must implement interface gdi.gds.db.DBPoolConfigIFC
+# DBPOOL_CFGOBJECT = The path to the config object according to its config type.
+#
+# Example of Class DB Pool:
+# DBPOOL_API=GD
+# DBPOOL_CFGTYPE=CLASS
+# DBPOOL_CFGOBJECT=gdi.gds.itworks.re.beans.GDDBPoolConfig
+#
+# Example of File DB Pool:
+# DBPOOL_API=HIKARICP
+# DBPOOL_CFGTYPE=FILE
+# DBPOOL_CFGOBJECT=C:/Tech/Projects/Java/Applications/ITWorks Retail Edition/cashier/props/poolConfig.properties
+##########################
+DBPOOL_API=HIKARICP
+DBPOOL_CFGTYPE=FILE
+DBPOOL_CFGOBJECT=D:/Project/Cashier Phone/CashierPhone/props/hikaricpdbpool.prop
+DBPOOL_USEPOOL=TRUE
+
+#For future development. See java 1.4 Log API pattern to set the uniques log file.
+#A pattern consists of a string that includes the following special components that will be replaced at runtime:
+#"/" the local pathname separator
+#"%t" the system temporary directory
+#"%h" the value of the "user.home" system property
+#"%g" the generation number to distinguish rotated logs
+#"%u" a unique number to resolve conflicts
+#"%%" translates to a single percent sign "%"
+
+#Additional class to be defined for Startup and Rules
+#Will not be called if not defined here.
+SETTINGS_CLASS=gdi.gds.appserver.core.DefaultSettings
+
+#Defaulted to "gdi.gds.core.DefaultRules"
+RULES_CLASS=gdi.gds.appserver.core.DefaultRules
+
+#Application Info is in the settings file
+
+############
+# For the cashier printout result
+# CASHIERPRINTOUT_HEADER: The location for the cashier printout header template.
+# CASHIERPRINTOUT_FOOTER: The location for the cashier printout footer template.
+############
+CASHIERPRINTOUT_HEADER = D:/Project/Cashier Phone/CashierPhone/props/cashierheaderprintout.prop
+CASHIERPRINTOUT_FOOTER = D:/Project/Cashier Phone/CashierPhone/props/cashierfooterprintout.prop
+
+############
+# Printer Type - Require to input address
+# 0 = Generic
+# 1 = Epson TM-U220
+############
+CASHIERPRINTER_TYPE = 1
+
+############
+# Printer Location - Option for generic epson printer (0)
+# Ex:
+# Remote shared Printer: \\server\epsondot
+# Local LPT1 Printer: LPT1 or LPT1:
+# Linux Pararel Port: /dev/lp0 (ubuntu)
+############
+CASHIERPRINTER_LOCATION = LPT1:
+
+############
+# Types of fonts to print
+# Font Name  = Courier, Roman, Sanserif
+# Font Pitch = 1:Normal, 2:Condensed, 3:Expanded, 4:Doubled
+############
+CASHIERPRINTER_FONTNAME = Sanserif
+CASHIERPRINTER_FONTPITCH = 2
+
+############
+# Number of empty lines to print after the footer to make sure the printer rolls
+# on the right size.
+############
+CASHIERPRINTER_TRAILINGLINES = 7

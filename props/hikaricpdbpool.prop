@@ -1,0 +1,149 @@
+#############################################################################################
+# Database connection management With the GD Conn Pool API For HikariCP Connection Pool API
+#############################################################################################
+# DB_DRIVER: The database driver class.
+# DB_PATH: Database URL Format: jdbc:mysql://[hostname][:port]/[dbname][?param1=value1][&param2=value2].....
+# DB Login and Password are set in the ServerSetting class for security. Any changes to those values requires a new compilation
+# PARTITIONCOUNT: Number of partition to create in the pool.
+# MAX_DBCONN_PERPARTITION: Maximum number of database connection to create in each partition.
+# MIN_DBCONN_PERPARTITION: Minimum/Default number of Database connection to create in each partition.
+# DB_LOG_PATH: Location of the database log. Will be defaulted to /templog directory if not supplied here. No trailing / or \ please
+#############################################################################################
+#States how many database pools will be created (must be named in order 1, 2, 3 etc)
+#Turn on as many as needed, when 1 database not found will stop and throw error.
+#If only specified 2 db qty but listed 3, then only db 1 and 2 will be called.
+DB_POOLQTY=1
+
+#The first db ID
+#poolName
+#This property represents a user-defined name for the connection pool and appears mainly in logging and JMX management
+#consoles to identify pools and pool configurations. Default: auto-generated
+DB_POOLID_1=MY
+
+#Database type
+MY_DB_TYPE=MY
+
+#Database Driver
+MY_DB_DRIVER=com.mysql.jdbc.Driver
+
+#jdbcUrl
+#This property directs HikariCP to use "DriverManager-based" configuration.
+#We feel that DataSource-based configuration (above) is superior for a variety of reasons (see below),
+#but for many deployments there is little significant difference.
+#When using this property with "old" drivers, you may also need to set the driverClassName property, but try it first without.
+#Note that if this property is used, you may still use DataSource properties to configure your driver and is in fact recommended
+#over driver parameters specified in the URL itself. Default: none
+MY_DB_PATH=jdbc:mysql://localhost:3306/cashierphone
+
+#minimumIdle
+#This property controls the minimum number of idle connections that HikariCP tries to maintain in the pool.
+#If the idle connections dip below this value, HikariCP will make a best effort to add additional connections quickly and efficiently.
+#However, for maximum performance and responsiveness to spike demands, we recommend not setting this value and instead allowing HikariCP
+#to act as a fixed size connection pool. Default: same as maximumPoolSize
+MY_CONN_MINIDLE=20
+
+#maximumPoolSize
+#This property controls the maximum size that the pool is allowed to reach, including both idle and in-use connections.
+#Basically this value will determine the maximum number of actual connections to the database backend.
+#A reasonable value for this is best determined by your execution environment.
+#When the pool reaches this size, and no idle connections are available,
+#calls to getConnection() will block for up to connectionTimeout milliseconds before timing out. Default: 10
+MY_CONN_MAXPOOLSIZE=50
+
+#Log path for the database
+MY_DB_LOG_PATH=c:/temp/dblog_my
+
+# This is the autocommit settings for Hikari --> autoCommit (default: true).
+# If not set, then using default = true
+MY_AUTOCOMMIT=FALSE
+
+#The connection Time Out for waiting to get connection - connectionTimeout
+#1000ms is the minimum value. Default: 30000 (30 seconds) if not set
+#MY_CONN_REQUESTTIMEOUT=30000
+
+#The connection age when idle. idleTimeout:  A connection will never be retired as idle before this timeout.
+#A value of 0 means that idle connections are never removed from the pool. Default: 600000 (10 minutes)
+#MY_CONN_IDLETIMEOUT=600000
+
+#maxLifetime: This property controls the maximum lifetime of a connection in the pool.
+#When a connection reaches this timeout it will be retired from the pool, subject to a maximum variation of +30 seconds.
+#An in-use connection will never be retired, only when it is closed will it then be removed.
+#We strongly recommend setting this value, and it should be at least 30 seconds less than any database-level connection timeout.
+#A value of 0 indicates no maximum lifetime (infinite lifetime), subject of course to the idleTimeout setting.
+#Default: 1800000 (30 minutes)
+#MY_CONN_MAXLIFETIME=1800000
+
+##################################
+
+#The Second db ID
+#poolName
+DB_POOLID_2=PG
+
+#Database type
+PG_DB_TYPE=PG
+
+#Database Driver
+PG_DB_DRIVER=org.postgresql.Driver
+
+#jdbcUrl
+PG_DB_PATH=jdbc:postgresql://localhost:5432/test
+
+#minimumIdle
+PG_CONN_MINIDLE=20
+
+#maximumPoolSize
+PG_CONN_MAXPOOLSIZE=50
+
+#Log path for the database
+PG_DB_LOG_PATH=c:/temp/dblog_pg
+
+# This is the autocommit settings for Hikari --> autoCommit (default: true). True=1, false=0
+# If not set, then using default = true
+PG_AUTOCOMMIT=0
+
+#connectionTimeout
+#PG_CONN_REQUESTTIMEOUT=30000
+
+#idleTimeout
+#PG_CONN_IDLETIMEOUT=600000
+
+#maxLifetime
+#PG_CONN_MAXLIFETIME=1800000
+
+##################################
+
+#The Third db ID
+#The Second db ID
+#poolName
+DB_POOLID_3=MS
+
+#Database type
+MS_DB_TYPE=MS
+
+#Database Driver
+MS_DB_DRIVER=net.sourceforge.jtds.jdbc.Driver
+
+#jdbcUrl
+MS_DB_PATH=jdbc:jtds:sqlserver://192.168.2.52:1433/EndOfDays
+
+#minimumIdle
+MS_CONN_MINIDLE=20
+
+#maximumPoolSize
+MS_CONN_MAXPOOLSIZE=50
+
+#Log path for the database
+MS_DB_LOG_PATH=c:/temp/dblog_ms
+
+# This is the autocommit settings for Hikari --> autoCommit (default: true). True=1, false=0
+# If not set, then using default = true
+MS_AUTOCOMMIT=0
+
+#connectionTimeout
+#MS_CONN_REQUESTTIMEOUT=30000
+
+#idleTimeout
+#MS_CONN_IDLETIMEOUT=600000
+
+#maxLifetime
+#MS_CONN_MAXLIFETIME=1800000
