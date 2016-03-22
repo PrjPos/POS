@@ -64,6 +64,9 @@ public class Constants
   /** card info search category - by card code. */
   public static String CARD_SEARCHBY_CODE = "srccd"; 
   
+  /** Date Format. */
+  public static final String MYSQL_MEDIUM_DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
+  
   /** Module COnstants. */
   public static final int MOD_LOGIN = 0;
   public static final int MOD_ITEM_TYPE = 2;
