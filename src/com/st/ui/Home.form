@@ -32,7 +32,7 @@
     <Component class="javax.swing.JButton" name="btnCustomer">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="D:\Project\Cashier Phone\CashierPhone\src\com\st\ui\image\ButtonCustomer.png"/>
+          <Image iconType="3" name="/com/st/ui/image/ButtonCustomer.png"/>
         </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
