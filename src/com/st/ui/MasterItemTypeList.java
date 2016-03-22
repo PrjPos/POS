@@ -68,12 +68,12 @@ public class MasterItemTypeList extends javax.swing.JFrame
     switch(searchBy)
     {
       case 0://Search by item id
-        res = p.getItemList(Constants.ITEMTYPE_SEARCHBY_ITEMID,
+        res = p.getItemTypeList(Constants.ITEMTYPE_SEARCHBY_ITEMID,
                             txtSearchValue.getText(),
                             null);
         break;      
       default://Search by item name
-        res = p.getItemList(
+        res = p.getItemTypeList(
           Constants.ITEMTYPE_SEARCHBY_ITEMNAME,
           txtSearchValue.getText(),
           null);
@@ -138,17 +138,110 @@ public class MasterItemTypeList extends javax.swing.JFrame
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel3 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        cmbSearchCriteria = new javax.swing.JComboBox();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblItemType = new javax.swing.JTable();
+        txtSearchValue = new javax.swing.JTextField();
+        btnAdd = new javax.swing.JButton();
+        btnQuit = new javax.swing.JButton();
+        btnSearch = new javax.swing.JButton();
+        LMain = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/st/ui/image/Background_jadi.png"))); // NOI18N
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(0, 0, 1378, 750);
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setText("Master Tipe Barang");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(580, 20, 230, 29);
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel2.setText("Daftar Tipe Barang:");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(30, 110, 178, 22);
+
+        cmbSearchCriteria.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cmbSearchCriteria.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Kode Tipe", "Nama Tipe" }));
+        getContentPane().add(cmbSearchCriteria);
+        cmbSearchCriteria.setBounds(240, 110, 100, 30);
+
+        tblItemType.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "No", "Kode Tipe", "Nama Tipe", "Keterangan"
+            }
+        ));
+        tblItemType.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblItemTypeMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblItemType);
+
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(20, 150, 1330, 430);
+        getContentPane().add(txtSearchValue);
+        txtSearchValue.setBounds(350, 110, 140, 30);
+
+        btnAdd.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnAdd.setText("Tambah");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnAdd);
+        btnAdd.setBounds(60, 600, 130, 40);
+
+        btnQuit.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnQuit.setText("Keluar");
+        btnQuit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQuitActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnQuit);
+        btnQuit.setBounds(210, 600, 130, 40);
+
+        btnSearch.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnSearch.setText("Cari");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnSearch);
+        btnSearch.setBounds(500, 110, 80, 30);
+
+        LMain.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/st/ui/image/Background_jadi.png"))); // NOI18N
+        getContentPane().add(LMain);
+        LMain.setBounds(0, 0, 1378, 750);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        this.SearchItemType();
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void tblItemTypeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblItemTypeMouseClicked
+        editInfo(true);
+    }//GEN-LAST:event_tblItemTypeMouseClicked
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        editInfo(false);
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnQuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitActionPerformed
+        this.CloseMe();
+    }//GEN-LAST:event_btnQuitActionPerformed
 
   private void repaintItemTypeList(MasterItemTypeBean[] res)
   {
@@ -267,6 +360,15 @@ public class MasterItemTypeList extends javax.swing.JFrame
   }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel LMain;
+    private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnQuit;
+    private javax.swing.JButton btnSearch;
+    private javax.swing.JComboBox cmbSearchCriteria;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblItemType;
+    private javax.swing.JTextField txtSearchValue;
     // End of variables declaration//GEN-END:variables
 }
